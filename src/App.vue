@@ -1,9 +1,9 @@
 <template>
   <v-app>
     <header-view></header-view>
-    <!-- <v-main>
+    <v-main class="py-16 main-bg">
       <router-view />
-    </v-main> -->
+    </v-main>
   </v-app>
 </template>
 
@@ -21,3 +21,11 @@ export default Vue.extend({
   }),
 });
 </script>
+
+<style scoped>
+.main-bg {
+  background: linear-gradient(180deg, #e3f2fd, #bbdefb);
+  min-height: 100vh;
+  padding-top: 20px;
+}
+</style>

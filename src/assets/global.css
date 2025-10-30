@@ -1,3 +1,9 @@
+html,
+body,
+.v-application {
+  font-family: "Poppins", sans-serif !important;
+}
+
 .theme--dark.v-application {
   background-color: #f4f4f4;
   color: #ffffff;
