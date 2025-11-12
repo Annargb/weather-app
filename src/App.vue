@@ -24,7 +24,7 @@ export default Vue.extend({
 
 <style scoped>
 .main-bg {
-  background: linear-gradient(180deg, #e3f2fd, #bbdefb);
+  background: #8e8ca9;
   min-height: 100vh;
   padding-top: 20px;
 }

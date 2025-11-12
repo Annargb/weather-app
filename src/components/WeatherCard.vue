@@ -6,15 +6,21 @@
 
     <v-card-text class="text-center">
       <v-icon large color="blue">mdi-weather-partly-cloudy</v-icon>
-      <div class="text-h5 mt-3">{{ city }}</div>
+      <div class="text-h5 mt-3">{{ cityName }}</div>
       <div class="text-h6 grey--text">
-        +{{ temperature }}°C, {{ condition }}
+        <template v-if="isLoading">
+          <v-progress-circular
+            indeterminate
+            color="white"
+            size="24"
+          ></v-progress-circular>
+        </template>
+        <span v-else-if="error">{{ error }}</span>
+        <span v-else>
+          +{{ temperatureDisplay }}°C, wind {{ windspeedDisplay }} km/h
+        </span>
       </div>
     </v-card-text>
-
-    <v-card-actions class="justify-center">
-      <v-btn color="primary" @click="$emit('refresh', city)"> Refresh </v-btn>
-    </v-card-actions>
   </v-card>
 </template>
 
@@ -23,18 +29,27 @@ import Vue from "vue";
 
 export default Vue.extend({
   name: "WeatherCard",
-  props: {
-    city: {
-      type: String,
-      required: true,
+  computed: {
+    cityName(): string {
+      return this.$store.state.weather.city || "Unknown location";
     },
-    temperature: {
-      type: Number,
-      required: true,
+    temperature(): number | null {
+      return this.$store.state.weather.current.temperature;
     },
-    condition: {
-      type: String,
-      required: true,
+    windspeed(): number | null {
+      return this.$store.state.weather.current.windspeed;
+    },
+    isLoading(): boolean {
+      return this.$store.state.weather.isLoading;
+    },
+    error(): string | null {
+      return this.$store.state.weather.error;
+    },
+    temperatureDisplay(): string {
+      return this.temperature !== null ? this.temperature.toString() : "–";
+    },
+    windspeedDisplay(): string {
+      return this.windspeed !== null ? this.windspeed.toString() : "–";
     },
   },
 });
