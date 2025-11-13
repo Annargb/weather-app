@@ -1,18 +1,11 @@
 <template>
   <v-app-bar app color="primary" class="px-6">
     <div class="d-flex align-center">
-      <v-img
-        alt="Logo"
-        class="shrink mr-2"
-        contain
-        :src="logo"
-        transition="scale-transition"
-        width="74"
-      />
+      <v-icon color="secondary" class="shrink mr-3"
+        >mdi-weather-partly-cloudy</v-icon
+      >
 
-      <p class="white--text font-weight-bold text-h5 mb-0">
-        Weather<span class="logo-highlight">App</span>
-      </p>
+      <p class="text-h6 mb-0">WeatherNow</p>
     </div>
 
     <v-spacer></v-spacer>
@@ -91,8 +84,4 @@ export default Vue.extend({
 });
 </script>
 
-<style scoped>
-.logo-highlight {
-  color: #fbd473;
-}
-</style>
+<style scoped></style>

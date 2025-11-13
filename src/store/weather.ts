@@ -1,11 +1,10 @@
 import { Module } from "vuex";
-// import axios from "axios";
 import { RootState } from "./index";
 import {
   getGeoLocationByCity,
   getCityNameByCoords,
   getWeather,
-} from "@/services/weatherService";
+} from "@/api/weatherService";
 
 export interface WeatherState {
   city: string | null;

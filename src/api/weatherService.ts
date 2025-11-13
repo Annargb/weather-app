@@ -1,4 +1,4 @@
-import axios from "axios";
+import { openMeteoApi, geoMeteoApi, nominatimApi } from "./apiClient";
 
 export interface GeoLocation {
   latitude: number;
@@ -19,10 +19,9 @@ export interface WeatherData {
 export async function getGeoLocationByCity(
   city: string
 ): Promise<GeoLocation | null> {
-  const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(
-    city
-  )}&language=en`;
-  const { data } = await axios.get(url);
+  const { data } = await geoMeteoApi.get("search", {
+    params: { name: city, language: "en" },
+  });
   const location = data.results?.[0];
   if (!location) return null;
   return {
@@ -36,8 +35,14 @@ export async function getCityNameByCoords(
   lat: number,
   lon: number
 ): Promise<ReverseGeoLocation> {
-  const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}&accept-language=en`;
-  const { data } = await axios.get(url);
+  const { data } = await nominatimApi.get("reverse", {
+    params: {
+      lat,
+      lon,
+      "accept-language": "en",
+    },
+  });
+
   const cityName =
     data.address.city ||
     data.address.town ||
@@ -46,6 +51,7 @@ export async function getCityNameByCoords(
     data.address.locality ||
     data.display_name ||
     "Unknown location";
+
   return { cityName };
 }
 
@@ -53,8 +59,19 @@ export async function getWeather(
   lat: number,
   lon: number
 ): Promise<WeatherData> {
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,windspeed_10m_max&timezone=auto`;
-  const { data } = await axios.get(url);
+  const { data } = await openMeteoApi.get("forecast", {
+    params: {
+      latitude: lat,
+      longitude: lon,
+      current_weather: true,
+      hourly: "temperature_2m,wind_speed_10m",
+      daily: "temperature_2m_max,temperature_2m_min,windspeed_10m_max",
+      timezone: "auto",
+    },
+  });
+
+  console.log(data);
+
   return {
     current: {
       temperature: data.current_weather.temperature,

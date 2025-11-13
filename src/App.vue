@@ -24,7 +24,6 @@ export default Vue.extend({
 
 <style scoped>
 .main-bg {
-  background: #8e8ca9;
   min-height: 100vh;
   padding-top: 20px;
 }

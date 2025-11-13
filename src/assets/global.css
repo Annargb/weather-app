@@ -1,7 +1,13 @@
 html,
 body,
-.v-application {
+.v-application,
+.v-application * {
   font-family: "Poppins", sans-serif !important;
+}
+
+.theme--light.v-application {
+  background-color: #f4f4f4;
+  color: #ffffff;
 }
 
 .theme--dark.v-application {
