@@ -16,15 +16,7 @@ export default Vue.extend({
   components: {
     HeaderView,
   },
-  data: () => ({
-    //
-  }),
 });
 </script>
 
-<style scoped>
-.main-bg {
-  min-height: 100vh;
-  padding-top: 20px;
-}
-</style>
+<style scoped></style>

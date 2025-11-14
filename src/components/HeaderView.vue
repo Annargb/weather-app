@@ -1,7 +1,7 @@
 <template>
-  <v-app-bar app color="primary" class="px-6">
+  <v-app-bar app color="card" class="px-16">
     <div class="d-flex align-center">
-      <v-icon color="secondary" class="shrink mr-3"
+      <v-icon color="secondary" class="shrink mr-2" :size="40"
         >mdi-weather-partly-cloudy</v-icon
       >
 
@@ -10,14 +10,16 @@
 
     <v-spacer></v-spacer>
 
-    <!-- <v-btn text @click="getCurrentLocation">
-      <span class="mr-2">Current location</span>
-      <v-icon color="success">mdi-crosshairs-gps</v-icon>
-    </v-btn> -->
-    <v-btn text :disabled="isLoading" @click="getCurrentLocation">
+    <v-btn
+      outlined
+      text
+      :disabled="isLoading"
+      class="rounded-xl"
+      @click="getCurrentLocation"
+    >
       <span class="mr-2">
         <template v-if="isLoading">Loading...</template>
-        <template v-else>Current location</template>
+        <template v-else>My location</template>
       </span>
       <v-icon color="success">mdi-crosshairs-gps</v-icon>
     </v-btn>

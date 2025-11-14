@@ -11,6 +11,9 @@ export interface WeatherState {
   current: {
     temperature: number | null;
     windspeed: number | null;
+    humidity: number | null;
+    visibility: number | null;
+    weathercode: number | null;
   };
   daily: number[];
   hourly: number[];
@@ -25,6 +28,9 @@ export const weather: Module<WeatherState, RootState> = {
     current: {
       temperature: null,
       windspeed: null,
+      humidity: null,
+      visibility: null,
+      weathercode: null,
     },
     daily: [],
     hourly: [],
@@ -41,7 +47,13 @@ export const weather: Module<WeatherState, RootState> = {
     },
     setCurrentWeather(
       state,
-      payload: { temperature: number; windspeed: number }
+      payload: {
+        temperature: number;
+        windspeed: number;
+        humidity: number;
+        visibility: number;
+        weathercode: number;
+      }
     ) {
       state.current = payload;
     },
@@ -101,10 +113,13 @@ export const weather: Module<WeatherState, RootState> = {
     ) {
       commit("setIsLoading", true);
       commit("setError", null);
+      console.log("Fetching weather by coords:", lat, lon);
       try {
         const { cityName } = await getCityNameByCoords(lat, lon);
+        console.log("City name:", cityName);
         await dispatch("fetchWeatherData", { lat, lon, cityName });
       } catch (err: unknown) {
+        console.error("Error fetching weather by coords:", err);
         commit(
           "setError",
           err instanceof Error ? err.message : "Weather loading error"
@@ -120,6 +135,11 @@ export const weather: Module<WeatherState, RootState> = {
       const savedCity = localStorage.getItem("current_city");
 
       if (savedLat && savedLon) {
+        console.log(
+          "Dispatching fetchWeatherByCoords with",
+          savedLat,
+          savedLon
+        );
         await dispatch("fetchWeatherByCoords", {
           lat: Number(savedLat),
           lon: Number(savedLon),

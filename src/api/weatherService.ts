@@ -11,7 +11,13 @@ export interface ReverseGeoLocation {
 }
 
 export interface WeatherData {
-  current: { temperature: number; windspeed: number };
+  current: {
+    temperature: number;
+    windspeed: number;
+    humidity: number;
+    visibility: number;
+    weathercode: number;
+  };
   daily: number[];
   hourly: number[];
 }
@@ -40,8 +46,11 @@ export async function getCityNameByCoords(
       lat,
       lon,
       "accept-language": "en",
+      format: "json",
     },
   });
+
+  console.log(data);
 
   const cityName =
     data.address.city ||
@@ -63,19 +72,21 @@ export async function getWeather(
     params: {
       latitude: lat,
       longitude: lon,
-      current_weather: true,
+      current:
+        "temperature_2m,wind_speed_10m,relativehumidity_2m,visibility,weather_code",
       hourly: "temperature_2m,wind_speed_10m",
       daily: "temperature_2m_max,temperature_2m_min,windspeed_10m_max",
       timezone: "auto",
     },
   });
 
-  console.log(data);
-
   return {
     current: {
-      temperature: data.current_weather.temperature,
-      windspeed: data.current_weather.windspeed,
+      temperature: data.current.temperature_2m,
+      windspeed: data.current.wind_speed_10m,
+      humidity: data.current.relativehumidity_2m,
+      visibility: data.current.visibility,
+      weathercode: data.current.weather_code,
     },
     daily: data.daily,
     hourly: data.hourly,
