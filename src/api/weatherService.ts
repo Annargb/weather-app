@@ -10,6 +10,14 @@ export interface ReverseGeoLocation {
   cityName: string;
 }
 
+export interface DailyWeatherData {
+  time: string;
+  temperature_2m_max: number;
+  temperature_2m_min: number;
+  windspeed_10m_max: number;
+  weather_code: number;
+}
+
 export interface WeatherData {
   current: {
     temperature: number;
@@ -18,7 +26,7 @@ export interface WeatherData {
     visibility: number;
     weathercode: number;
   };
-  daily: number[];
+  daily: DailyWeatherData;
   hourly: number[];
 }
 
@@ -75,7 +83,8 @@ export async function getWeather(
       current:
         "temperature_2m,wind_speed_10m,relativehumidity_2m,visibility,weather_code",
       hourly: "temperature_2m,wind_speed_10m",
-      daily: "temperature_2m_max,temperature_2m_min,windspeed_10m_max",
+      daily:
+        "temperature_2m_max,temperature_2m_min,windspeed_10m_max,weather_code",
       timezone: "auto",
     },
   });
@@ -88,7 +97,14 @@ export async function getWeather(
       visibility: data.current.visibility,
       weathercode: data.current.weather_code,
     },
-    daily: data.daily,
+    daily: {
+      time: data.daily.time,
+      temperature_2m_max: data.daily.temperature_2m_max,
+      temperature_2m_min: data.daily.temperature_2m_min,
+      windspeed_10m_max: data.daily.windspeed_10m_max,
+      weather_code: data.daily.weather_code,
+    },
+
     hourly: data.hourly,
   };
 }

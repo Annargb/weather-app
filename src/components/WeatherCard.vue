@@ -1,5 +1,5 @@
 <template>
-  <v-card elevation="9" color="card" class="pa-6 rounded-xl" max-width="900">
+  <v-card elevation="9" color="card" class="pa-6 rounded-xl weather-card">
     <v-card-text>
       <v-row align="center" class="mb-2">
         <v-icon left color="blue">mdi-map-marker</v-icon>
@@ -9,8 +9,10 @@
       <div class="text-subtitle-1 mb-4">{{ currentDateTime }}</div>
 
       <v-row align="center">
-        <v-col cols="8">
-          <div class="text-h2 font-weight-bold">{{ temperatureDisplay }}°C</div>
+        <v-col cols="12" md="8">
+          <div class="text-h2 font-weight-bold weather-temp">
+            {{ temperatureDisplay }}°C
+          </div>
           <div class="text-subtitle-1">{{ weatherDescription }}</div>
 
           <v-row class="mt-4" justify="start">
@@ -44,8 +46,8 @@
           </v-row>
         </v-col>
 
-        <v-col cols="4" class="d-flex justify-center align-center">
-          <v-icon :size="180" color="yellow">{{ weatherIcon }}</v-icon>
+        <v-col cols="12" md="4" class="d-flex justify-center align-center">
+          <v-icon class="weather-icon" color="yellow">{{ weatherIcon }}</v-icon>
         </v-col>
       </v-row>
     </v-card-text>
@@ -148,3 +150,27 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style scoped>
+.weather-card {
+  width: 100%;
+}
+@media (max-width: 600px) {
+  .weather-temp {
+    font-size: 40px !important;
+  }
+}
+.weather-icon {
+  font-size: 160px;
+}
+@media (max-width: 960px) {
+  .weather-icon {
+    font-size: 120px;
+  }
+}
+@media (max-width: 600px) {
+  .weather-icon {
+    font-size: 90px;
+  }
+}
+</style>
