@@ -1,34 +1,6 @@
 import { openMeteoApi, geoMeteoApi, nominatimApi } from "./apiClient";
-
-export interface GeoLocation {
-  latitude: number;
-  longitude: number;
-  name: string;
-}
-
-export interface ReverseGeoLocation {
-  cityName: string;
-}
-
-export interface DailyWeatherData {
-  time: string;
-  temperature_2m_max: number;
-  temperature_2m_min: number;
-  windspeed_10m_max: number;
-  weather_code: number;
-}
-
-export interface WeatherData {
-  current: {
-    temperature: number;
-    windspeed: number;
-    humidity: number;
-    visibility: number;
-    weathercode: number;
-  };
-  daily: DailyWeatherData;
-  hourly: number[];
-}
+import { GeoLocation, ReverseGeoLocation } from "../types/geo";
+import { WeatherData } from "../types/weather";
 
 export async function getGeoLocationByCity(
   city: string
@@ -57,8 +29,6 @@ export async function getCityNameByCoords(
       format: "json",
     },
   });
-
-  console.log(data);
 
   const cityName =
     data.address.city ||
@@ -104,7 +74,10 @@ export async function getWeather(
       windspeed_10m_max: data.daily.windspeed_10m_max,
       weather_code: data.daily.weather_code,
     },
-
-    hourly: data.hourly,
+    hourly: {
+      time: data.hourly.time,
+      temperature_2m: data.hourly.temperature_2m,
+      wind_speed_10m: data.hourly.wind_speed_10m,
+    },
   };
 }

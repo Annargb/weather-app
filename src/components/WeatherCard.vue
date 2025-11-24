@@ -56,22 +56,9 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { RootState } from "../store/types";
 import { weatherCodeDescriptions } from "@/utils/weatherCodeDescriptions";
 import { weatherCodeIcons } from "@/utils/weatherCodeIcons";
-
-interface WeatherCurrent {
-  temperature: number | null;
-  windspeed: number | null;
-  humidity: number | null;
-  visibility: number | null;
-  description: string | null;
-  weathercode: number;
-}
-
-interface WeatherState {
-  city: string;
-  current: WeatherCurrent;
-}
 
 export default Vue.extend({
   name: "WeatherCard",
@@ -82,28 +69,43 @@ export default Vue.extend({
     };
   },
   computed: {
+    weatherState(): RootState["weather"] {
+      return this.$store.state.weather;
+    },
     cityName(): string {
-      const state = this.$store.state.weather as WeatherState;
-      return state.city || "Unknown location";
+      return this.weatherState.city ?? "Unknown location";
     },
     temperature(): number | null {
-      const temp = (this.$store.state.weather as WeatherState).current
-        .temperature;
-      return temp !== null ? temp : null;
+      return this.weatherState.current?.temperature ?? null;
     },
     wind(): number | null {
-      return (this.$store.state.weather as WeatherState).current.windspeed;
+      return this.weatherState.current?.windspeed ?? null;
     },
     humidity(): number | null {
-      return (this.$store.state.weather as WeatherState).current.humidity;
+      return this.weatherState.current?.humidity ?? null;
     },
     visibility(): number | null {
-      return (this.$store.state.weather as WeatherState).current.visibility;
+      return this.weatherState.current?.visibility ?? null;
     },
     weatherDescription(): string {
-      const code = (this.$store.state.weather as WeatherState).current
-        .weathercode;
-      return weatherCodeDescriptions[code] || "-";
+      const code = this.weatherState.current?.weathercode;
+      return code != null ? weatherCodeDescriptions[code] : "-";
+    },
+    weatherIcon(): string {
+      const code = this.weatherState.current?.weathercode;
+      return code != null ? weatherCodeIcons[code] : "mdi-weather-cloudy";
+    },
+    temperatureDisplay(): string {
+      return this.temperature !== null ? this.temperature.toString() : "–";
+    },
+    windDisplay(): string {
+      return this.wind !== null ? `${this.wind} km/h` : "–";
+    },
+    humidityDisplay(): string {
+      return this.humidity !== null ? `${this.humidity}%` : "–";
+    },
+    visibilityDisplay(): string {
+      return this.visibility !== null ? `${this.visibility} m` : "–";
     },
     currentDateTime(): string {
       const dateTime = this.dateTimeNow;
@@ -119,23 +121,6 @@ export default Vue.extend({
       });
 
       return `${weekday}, ${month} ${day}, ${year} ${time}`;
-    },
-    temperatureDisplay(): string {
-      return this.temperature !== null ? this.temperature.toString() : "–";
-    },
-    windDisplay(): string {
-      return this.wind !== null ? `${this.wind} km/h` : "–";
-    },
-    humidityDisplay(): string {
-      return this.humidity !== null ? `${this.humidity}%` : "–";
-    },
-    visibilityDisplay(): string {
-      return this.visibility !== null ? `${this.visibility} m` : "–";
-    },
-    weatherIcon(): string {
-      const code = (this.$store.state.weather as WeatherState).current
-        .weathercode;
-      return weatherCodeIcons[code] || "mdi-weather-cloudy";
     },
   },
   mounted() {

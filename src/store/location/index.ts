@@ -1,10 +1,6 @@
 import { Module } from "vuex";
-import { RootState } from "./index";
-
-export interface LocationState {
-  lat: number | null;
-  lon: number | null;
-}
+import { RootState } from "../types";
+import { LocationState } from "./types";
 
 export const location: Module<LocationState, RootState> = {
   namespaced: true,

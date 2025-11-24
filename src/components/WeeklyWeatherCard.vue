@@ -22,6 +22,8 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { RootState } from "@/store/types";
+import { DailyWeatherData, WeeklyDay } from "@/types/weather";
 import WeatherDayCard from "./WeatherDayCard.vue";
 import { weatherCodeIcons } from "@/utils/weatherCodeIcons";
 import { weatherCodeDescriptions } from "@/utils/weatherCodeDescriptions";
@@ -30,13 +32,15 @@ export default Vue.extend({
   name: "WeeklyWeatherCard",
   components: { WeatherDayCard },
   computed: {
-    weeklyData() {
-      const daily = this.$store.state.weather.daily;
-
+    dailyState(): DailyWeatherData | null {
+      const store = this.$store.state as RootState;
+      return store.weather.daily || null;
+    },
+    weeklyData(): WeeklyDay[] {
+      const daily = this.dailyState;
       if (!daily || !daily.time) return [];
-
-      return daily.time.map((_, i: number) => ({
-        date: daily.time[i],
+      return daily.time.map((date, i) => ({
+        date,
         tempMax: daily.temperature_2m_max?.[i],
         tempMin: daily.temperature_2m_min?.[i],
         wind: daily.windspeed_10m_max?.[i],

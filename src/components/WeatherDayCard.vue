@@ -6,7 +6,7 @@
   >
     <v-card-text class="w-100">
       <div class="text-subtitle-2 font-weight-medium mb-2">
-        {{ weekday }}, {{ date }}
+        {{ weekday }}, {{ formattedDate }}
       </div>
 
       <v-icon :size="48" color="yellow">{{ dayData.icon }}</v-icon>
@@ -25,18 +25,19 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { WeeklyDay } from "../types/weather";
 
 export default Vue.extend({
   name: "WeatherDayCard",
   props: {
-    dayData: { type: Object, required: true },
+    dayData: { type: Object as () => WeeklyDay, required: true },
   },
   computed: {
     weekday(): string {
       const date = new Date(this.dayData.date);
       return date.toLocaleString("en-US", { weekday: "long" });
     },
-    date(): string {
+    formattedDate(): string {
       const date = new Date(this.dayData.date);
       const day = date.getDate().toString().padStart(2, "0");
       const month = (date.getMonth() + 1).toString().padStart(2, "0");

@@ -1,14 +1,10 @@
 import Vue from "vue";
 import Vuex, { StoreOptions } from "vuex";
-import { location, LocationState } from "./location";
-import { weather, WeatherState } from "./weather";
+import { RootState } from "./types";
+import { location } from "./location/index";
+import { weather } from "./weather/index";
 
 Vue.use(Vuex);
-
-export interface RootState {
-  location: LocationState;
-  weather: WeatherState;
-}
 
 const store: StoreOptions<RootState> = {
   modules: {

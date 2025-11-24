@@ -1,39 +1,20 @@
 import { Module } from "vuex";
-import { RootState } from "./index";
 import {
   getGeoLocationByCity,
   getCityNameByCoords,
   getWeather,
 } from "@/api/weatherService";
-
-export interface WeatherState {
-  city: string | null;
-  current: {
-    temperature: number | null;
-    windspeed: number | null;
-    humidity: number | null;
-    visibility: number | null;
-    weathercode: number | null;
-  };
-  daily: number[];
-  hourly: number[];
-  isLoading: boolean;
-  error: string | null;
-}
+import { RootState } from "../types";
+import { WeatherState } from "./types";
 
 export const weather: Module<WeatherState, RootState> = {
   namespaced: true,
+
   state: () => ({
     city: localStorage.getItem("current_city") || null,
-    current: {
-      temperature: null,
-      windspeed: null,
-      humidity: null,
-      visibility: null,
-      weathercode: null,
-    },
-    daily: [],
-    hourly: [],
+    current: null,
+    daily: null,
+    hourly: null,
     isLoading: false,
     error: null,
   }),
@@ -45,22 +26,13 @@ export const weather: Module<WeatherState, RootState> = {
     setIsLoading(state, payload: boolean) {
       state.isLoading = payload;
     },
-    setCurrentWeather(
-      state,
-      payload: {
-        temperature: number;
-        windspeed: number;
-        humidity: number;
-        visibility: number;
-        weathercode: number;
-      }
-    ) {
+    setCurrentWeather(state, payload: WeatherState["current"]) {
       state.current = payload;
     },
-    setDailyWeather(state, payload: number[]) {
+    setDailyWeather(state, payload: WeatherState["daily"]) {
       state.daily = payload;
     },
-    setHourlyWeather(state, payload: number[]) {
+    setHourlyWeather(state, payload: WeatherState["hourly"]) {
       state.hourly = payload;
     },
     setError(state, payload: string | null) {
@@ -92,6 +64,7 @@ export const weather: Module<WeatherState, RootState> = {
       try {
         const location = await getGeoLocationByCity(city);
         if (!location) throw new Error("City not found");
+
         await dispatch("fetchWeatherData", {
           lat: location.latitude,
           lon: location.longitude,
@@ -113,7 +86,7 @@ export const weather: Module<WeatherState, RootState> = {
     ) {
       commit("setIsLoading", true);
       commit("setError", null);
-      console.log("Fetching weather by coords:", lat, lon);
+
       try {
         const { cityName } = await getCityNameByCoords(lat, lon);
         console.log("City name:", cityName);
@@ -135,11 +108,6 @@ export const weather: Module<WeatherState, RootState> = {
       const savedCity = localStorage.getItem("current_city");
 
       if (savedLat && savedLon) {
-        console.log(
-          "Dispatching fetchWeatherByCoords with",
-          savedLat,
-          savedLon
-        );
         await dispatch("fetchWeatherByCoords", {
           lat: Number(savedLat),
           lon: Number(savedLon),
