@@ -5,6 +5,18 @@ body,
   font-family: "Poppins", sans-serif !important;
 }
 
+:root {
+  --max-content-width: 1100px;
+}
+
+#app {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #9ec9fc, #6fa8fc);
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+}
+
 /* .theme--light.v-application {
   background-color: #f4f4f4;
   color: #ffffff;

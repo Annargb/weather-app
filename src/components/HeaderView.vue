@@ -1,28 +1,34 @@
 <template>
-  <v-app-bar app color="card" class="px-16">
-    <div class="d-flex align-center">
-      <v-icon color="secondary" class="shrink mr-2" :size="40"
-        >mdi-weather-partly-cloudy</v-icon
-      >
+  <v-app-bar app dense height="70" class="glass-header">
+    <v-container fluid class="pa-0">
+      <v-row align="center" justify="space-between" no-gutters>
+        <!-- Ліва частина: логотип + назва -->
+        <v-col cols="auto" class="d-flex align-center">
+          <v-icon color="secondary" :size="36" class="mr-2"
+            >mdi-weather-partly-cloudy</v-icon
+          >
+          <span class="text-h6 mb-0">WeatherNow</span>
+        </v-col>
 
-      <p class="text-h6 mb-0">WeatherNow</p>
-    </div>
-
-    <v-spacer></v-spacer>
-
-    <v-btn
-      outlined
-      text
-      :disabled="isLoading"
-      class="rounded-xl"
-      @click="getCurrentLocation"
-    >
-      <span class="mr-2">
-        <template v-if="isLoading">Loading...</template>
-        <template v-else>My location</template>
-      </span>
-      <v-icon color="success">mdi-crosshairs-gps</v-icon>
-    </v-btn>
+        <!-- Права частина: кнопка -->
+        <v-col cols="auto" class="d-flex justify-end">
+          <v-btn
+            outlined
+            text
+            class="location-btn rounded-xl"
+            :disabled="isLoading"
+            @click="getCurrentLocation"
+          >
+            <v-icon small color="success" class="mr-1"
+              >mdi-crosshairs-gps</v-icon
+            >
+            <span class="btn-text">{{
+              isLoading ? "Loading..." : "My location"
+            }}</span>
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-container>
   </v-app-bar>
 </template>
 
@@ -32,11 +38,6 @@ import { RootState } from "@/store/types";
 
 export default Vue.extend({
   name: "HeaderView",
-  data() {
-    return {
-      logo: require("@/assets/images/logo.svg"),
-    };
-  },
   computed: {
     isLoading(): boolean {
       return (this.$store.state as RootState).weather.isLoading;
@@ -51,8 +52,7 @@ export default Vue.extend({
         });
         localStorage.setItem("lat", lat.toString());
         localStorage.setItem("lon", lon.toString());
-      } catch (err) {
-        console.error("Error fetching weather:", err);
+      } catch {
         alert("Cannot fetch weather for your location. Showing default city.");
         await this.$store.dispatch(
           "weather/fetchWeatherByCity",
@@ -72,8 +72,7 @@ export default Vue.extend({
             position.coords.longitude
           );
         },
-        async (error) => {
-          console.error("Geolocation error:", error);
+        async () => {
           alert("Cannot get your location. Showing default city.");
           await this.$store.dispatch(
             "weather/fetchWeatherByCity",
@@ -89,4 +88,23 @@ export default Vue.extend({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.v-application .v-app-bar.glass-header {
+  background-color: rgb(245 245 245 / 15%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.location-btn {
+  min-width: 40px;
+  padding: 4px 12px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 400px) {
+  .btn-text {
+    display: none;
+  }
+}
+</style>

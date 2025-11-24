@@ -1,8 +1,7 @@
 <template>
   <v-card
     elevation="6"
-    color="card"
-    class="pa-3 rounded-xl d-flex flex-column align-center text-center"
+    class="pa-3 rounded-xl d-flex flex-column align-center text-center glass-card"
   >
     <v-card-text class="w-100">
       <div class="text-subtitle-2 font-weight-medium mb-2">
@@ -51,5 +50,10 @@ export default Vue.extend({
 .v-card {
   width: 100%;
   min-height: 180px;
+}
+.glass-card {
+  background-color: rgb(245 245 245 / 15%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 </style>

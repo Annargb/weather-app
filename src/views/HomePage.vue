@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pa-6">
+  <v-container class="pa-2 pa-sm-4 pa-md-6">
     <v-container fluid class="d-flex flex-column align-center pa-4">
       <WeatherCard class="weather-card-fixed-width mb-6" />
       <WeeklyWeatherCard class="weather-card-fixed-width" />
@@ -17,11 +17,6 @@ export default Vue.extend({
   components: {
     WeatherCard,
     WeeklyWeatherCard,
-  },
-  methods: {
-    refreshWeather() {
-      console.log("Оновлення погоди...");
-    },
   },
 });
 </script>
