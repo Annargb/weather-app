@@ -16,6 +16,7 @@ export default new Vuetify({
         primary: "#312a2a",
         secondary: "#fff",
         accent: "#4CBB17",
+        card: "#3d3d3d",
       },
     },
     options: {

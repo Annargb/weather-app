@@ -11,18 +11,22 @@ body,
 
 #app {
   min-height: 100vh;
-  background: linear-gradient(135deg, #9ec9fc, #6fa8fc);
   background-attachment: fixed;
   display: flex;
   flex-direction: column;
 }
-
-/* .theme--light.v-application {
-  background-color: #f4f4f4;
-  color: #ffffff;
+.v-application.theme--light {
+  background: linear-gradient(135deg, #9ec9fc, #6fa8fc) !important;
 }
-
-.theme--dark.v-application {
-  background-color: #f4f4f4;
-  color: #ffffff;
-} */
+.v-application.theme--dark {
+  background: linear-gradient(135deg, #1e1e1e, #111) !important;
+}
+.theme--light .location-btn.v-btn.v-btn--outlined {
+  border-color: rgba(0, 0, 0, 0.6) !important;
+}
+.theme--dark .location-btn.v-btn.v-btn--outlined {
+  border-color: #fff !important;
+}
+.theme--light .location-btn .v-icon {
+  color: white !important;
+}

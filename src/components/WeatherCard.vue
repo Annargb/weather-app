@@ -1,5 +1,5 @@
 <template>
-  <v-card elevation="9" class="pa-6 rounded-xl weather-card">
+  <v-card elevation="9" color="card" class="pa-6 rounded-xl weather-card">
     <v-card-text>
       <v-row align="center" class="mb-2">
         <v-icon left color="blue">mdi-map-marker</v-icon>
@@ -147,9 +147,6 @@ export default Vue.extend({
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  background-color: rgb(245 245 245 / 15%);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
 }
 .weather-temp {
   word-break: keep-all;
