@@ -89,7 +89,6 @@ export const weather: Module<WeatherState, RootState> = {
 
       try {
         const { cityName } = await getCityNameByCoords(lat, lon);
-        console.log("City name:", cityName);
         await dispatch("fetchWeatherData", { lat, lon, cityName });
       } catch (err: unknown) {
         console.error("Error fetching weather by coords:", err);

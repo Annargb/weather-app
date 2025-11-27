@@ -52,7 +52,7 @@ export async function getWeather(
       longitude: lon,
       current:
         "temperature_2m,wind_speed_10m,relativehumidity_2m,visibility,weather_code",
-      hourly: "temperature_2m,wind_speed_10m",
+      hourly: "temperature_2m,wind_speed_10m,weather_code",
       daily:
         "temperature_2m_max,temperature_2m_min,windspeed_10m_max,weather_code",
       timezone: "auto",
@@ -77,7 +77,8 @@ export async function getWeather(
     hourly: {
       time: data.hourly.time,
       temperature_2m: data.hourly.temperature_2m,
-      wind_speed_10m: data.hourly.wind_speed_10m,
+      windspeed_10m: data.hourly.wind_speed_10m,
+      weather_code: data.hourly.weather_code,
     },
   };
 }

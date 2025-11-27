@@ -17,7 +17,16 @@ export interface CurrentWeatherData {
 export interface HourlyWeatherData {
   time: string[];
   temperature_2m: number[];
-  wind_speed_10m: number[];
+  windspeed_10m: number[];
+  weather_code: number[];
+}
+
+export interface HourlyWeather {
+  time: string;
+  temp?: number;
+  wind?: number;
+  weathercode?: number;
+  icon?: string;
 }
 
 export interface WeatherData {
