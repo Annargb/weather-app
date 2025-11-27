@@ -158,6 +158,7 @@ export default Vue.extend({
 }
 .toggle-track.active .toggle-thumb {
   transform: translateX(22px);
+  background: #1e1e1e;
 }
 @media (max-width: 400px) {
   .btn-text {
