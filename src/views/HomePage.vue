@@ -1,6 +1,8 @@
 <template>
   <v-container class="pa-2 pa-sm-4 pa-md-6">
     <v-container fluid class="d-flex flex-column align-center pa-4">
+      <CitySearch />
+
       <WeatherCard class="weather-card-fixed-width mb-10" />
       <HourlyWeatherCard class="weather-card-fixed-width mb-10" />
       <WeeklyWeatherCard class="weather-card-fixed-width" />
@@ -10,6 +12,7 @@
 
 <script lang="ts">
 import Vue from "vue";
+import CitySearch from "@/components/CitySearch.vue";
 import WeatherCard from "@/components/WeatherCard.vue";
 import HourlyWeatherCard from "@/components/HourlyWeatherCard.vue";
 import WeeklyWeatherCard from "@/components/WeeklyWeatherCard.vue";
@@ -17,6 +20,7 @@ import WeeklyWeatherCard from "@/components/WeeklyWeatherCard.vue";
 export default Vue.extend({
   name: "HomeView",
   components: {
+    CitySearch,
     WeatherCard,
     HourlyWeatherCard,
     WeeklyWeatherCard,
