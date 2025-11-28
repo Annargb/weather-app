@@ -16,7 +16,7 @@ body,
   flex-direction: column;
 }
 .v-application.theme--light {
-  background: linear-gradient(135deg, #9ec9fc, #6fa8fc) !important;
+  background: linear-gradient(135deg, #9ec9fc4d, #9ec9fc) !important;
 }
 .v-application.theme--dark {
   background: linear-gradient(135deg, #1e1e1e, #111) !important;

@@ -5,7 +5,7 @@
   >
     <v-card-text class="w-100">
       <div class="text-subtitle-2 font-weight-medium mb-2">
-        {{ formattedHour }}
+        {{ formattedDateTime }}
       </div>
 
       <v-icon :size="36" color="yellow">{{ hourData.icon }}</v-icon>
@@ -30,13 +30,21 @@ export default Vue.extend({
     hourData: { type: Object as () => HourlyWeather, required: true },
   },
   computed: {
-    formattedHour(): string {
+    formattedDateTime(): string {
       const date = new Date(this.hourData.time + "Z");
-      return date.toLocaleTimeString("en-GB", {
+
+      const day = date.toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+      });
+
+      const time = date.toLocaleTimeString("en-GB", {
         hour: "2-digit",
         minute: "2-digit",
         hour12: false,
       });
+
+      return `${day} ${time}`;
     },
   },
 });

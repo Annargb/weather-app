@@ -121,9 +121,10 @@ export default Vue.extend({
       const day = dateTime.getDate();
       const year = dateTime.getFullYear();
 
-      const time = dateTime.toLocaleString("en-US", {
-        hour: "numeric",
+      const time = dateTime.toLocaleString("en-GB", {
+        hour: "2-digit",
         minute: "2-digit",
+        hour12: false,
       });
 
       return `${weekday}, ${month} ${day}, ${year} ${time}`;
